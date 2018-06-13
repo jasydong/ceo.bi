@@ -20,7 +20,7 @@
         <script src="https://img.hcharts.cn/highcharts/modules/exporting.js"></script>
         <script src="https://img.hcharts.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
         <script>
-            $.getJSON('http://192.168.127.142/ceo.bi/get_trade.php', function (data) {
+            $.getJSON('get_trade.php', function (data) {
                 if(data.code !== 200) {
                     alert('读取数据失败！');
                     return false;
