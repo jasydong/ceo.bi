@@ -97,6 +97,14 @@ try {
             }
         }
 
+        //写入DB
+        $minutes = intval(time()/60);
+        if ($minutes % 5 ==0) { //5分钟写入一次
+            $db = DB::getInstance('localhost', 'root', 'admin2011', 'ceobi');
+            $insertData = ["trade_total"=>$total, "create_time"=>time()];
+            $db->insert("trade_realtime", $insertData);
+        }
+
         $rate = number_format($totalFee*0.6/9598282.9, 2);
         echo "ALL: {$total}\n";
         echo "RATE: {$rate} (0.38=>69)\n";
