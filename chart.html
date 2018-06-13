@@ -1,8 +1,9 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-        <meta charset="utf-8"><link rel="icon" href="https://static.jianshukeji.com/highcharts/images/favicon.ico">
+        <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" href="https://static.jianshukeji.com/highcharts/images/favicon.ico">
         <style>
             .highcharts-axis-resizer {
                 stroke: #eee;
@@ -11,17 +12,17 @@
                 stroke: #ccc;
             }
         </style>
+    </head>
+    <body>
+        <div id="container" style="min-width:520px;height:520px"></div>
         <script src="https://img.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
         <script src="https://img.hcharts.cn/highstock/highstock.js"></script>
         <script src="https://img.hcharts.cn/highcharts/modules/exporting.js"></script>
         <script src="https://img.hcharts.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
-    </head>
-    <body>
-        <div id="container" style="min-width:400px;height:400px"></div>
         <script>
-            $.getJSON('https://data.jianshukeji.com/stock/history/000001', function (data) {
-                if(data.code !== 1) {
-                    alert('读取股票数据失败！');
+            $.getJSON('http://192.168.127.142/ceo.bi/get_trade.php', function (data) {
+                if(data.code !== 200) {
+                    alert('读取数据失败！');
                     return false;
                 }
                 data = data.data;
@@ -31,10 +32,35 @@
                 });
                 Highcharts.stockChart('container', {
                     rangeSelector: {
-                        selected: 2
+                    buttons: [{
+                            type: 'hour',
+                            count: 1,
+                            text: '1h'
+                        },{
+                            type: 'day',
+                            count: 1,
+                            text: '1d'
+                        }, {
+                            type: 'week',
+                            count: 1,
+                            text: '1w'
+                        }, {
+                            type: 'month',
+                            count: 1,
+                            text: '1m'
+                        }, {
+                            type: 'year',
+                            count: 1,
+                            text: '1y'
+                        }, {
+                            type: 'all',
+                            text: 'All'
+                        }],
+                        selected: 2,
+                        inputEnabled: false,
                     },
                     title: {
-                        text: '平安银行历史股价'
+                        text: 'CEO平台成交额(24h)'
                     },
                     plotOptions: {
                         series: {
@@ -47,8 +73,8 @@
                     },
                     series: [{
                         // type: 'line',
-                        id: '000001',
-                        name: '平安银行',
+                        id: 'ceo_trade',
+                        name: 'CEO平台成交额',
                         data: data
                     }]
                 });
