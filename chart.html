@@ -30,6 +30,9 @@
                 Highcharts.each(data, function(d) {
                     d.length = 2;
                 });
+                // 配置
+                Highcharts.setOptions({global:{useUTC:false}});
+                // Chart
                 Highcharts.stockChart('container', {
                     rangeSelector: {
                     buttons: [{
