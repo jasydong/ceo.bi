@@ -45,11 +45,11 @@ function sort_by_subtotal($data)
 
     if (!empty($data)) {
         foreach ($data as $item) {
-            $id = $item['id'];
+            $name = $item['name'];
             $newPrice = $item['new_price']; //当前价格
             $volume = $item['volume']; //成交数量(24小时)
             $subTotal = floor($newPrice*$volume);
-            $result[$id] = $subTotal;
+            $result[$name] = $subTotal;
         }
 
         //按成交金额排序
@@ -58,7 +58,6 @@ function sort_by_subtotal($data)
 
     return $result;
 }
-
 
 try {
     //请求CEO.BI站点数据
@@ -72,17 +71,15 @@ try {
 
         //平台所有币种列表
         foreach ($result as $item) {
-            $id = $item['id'];
-            $coinList[$id] = $item;
+            $name = $item['name'];
+            $coinList[$name] = $item;
         }
 
         //按成交金额排序(倒序)
         $sortBySubTotal = sort_by_subtotal($result);
 
-        foreach ($sortBySubTotal as $id => $subTotal) {
-            $coin = $coinList[$id];
-            $title = $coin['title'];
-            $name = $coin['name'];
+        foreach ($sortBySubTotal as $name => $subTotal) {
+            $coin = $coinList[$name];
             $newPrice = $coin['new_price'];
             $change = $coin['change'];
             $total += $subTotal;
@@ -91,8 +88,8 @@ try {
                 $totalFee += $subTotal*0.004;
             }
 
-            if (in_array($id, [8,65]) || $subTotal > 15000000) { //成交额大于1500W
-                echo "{$i}, {$title}, {$newPrice}, {$change}, {$subTotal}\n";
+            if (in_array($name, ['ceo_qc','coo_qc']) || $subTotal > 8000000) { //成交额大于800W
+                echo "{$name}, {$newPrice}, {$change}, {$subTotal}\n";
                 $i++;
             }
         }
