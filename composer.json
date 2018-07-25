@@ -1,6 +1,15 @@
 {
-    "require": {
-        "guzzlehttp/guzzle": "^6.3",
-        "voku/simple-mysqli": "^5.4"
-    }
+  "name": "jasydong/ceobi",
+  "description": "ceo.bi",
+  "type": "php-tools",
+  "version": "1.0.0",
+  "license": [
+    "OSL-3.0"
+  ],
+  "require": {
+    "php": ">=5.4.0",
+    "guzzlehttp/guzzle": "^6.3",
+    "voku/simple-mysqli": "^5.4"
+  },
+  "minimum-stability": "dev"
 }
